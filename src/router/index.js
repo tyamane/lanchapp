@@ -39,6 +39,11 @@ const logout = (to, from, next) => {
   cognito.logout()
   next('/login')
 }
+const logout = (to, from, next) => {
+  alert("パスワードをリセットする確認コードを登録メールアドレスに送信します。")
+  cognito.logout()
+  next('/login')
+}
 
 const routes = [
   {
@@ -87,7 +92,7 @@ const routes = [
     component: Login
   },
   {
-    path: '/singup',
+    path: '/signup',
     name: 'Signup',
     component: Signup
   },
@@ -98,7 +103,11 @@ const routes = [
   },
   { path: '/logout',
     beforeEnter: logout
-  }
+  },
+  {
+    path: '/confirm_password',
+    beforeEnter: reset
+  },
 ]
 
 const router = new VueRouter({

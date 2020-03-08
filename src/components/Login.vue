@@ -2,6 +2,9 @@
 <template>
   <div class="login">
     <h2>ログイン</h2>
+    <div v-if="error" class="error">
+      {{ error}}
+    </div>
     <form @submit.prevent="login">
       <div>
         ユーザー名:
@@ -13,9 +16,10 @@
       </div>
       <button>ログイン</button>
     </form>
-    <router-link to="/confirm">確認コード入力</router-link>
     <br>
     <router-link to="/singup">ユーザー登録</router-link>
+    <br>
+    <router-link to="/reset_password">パスワードリセット</router-link>
   </div>
 </template>
 
@@ -25,7 +29,8 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      error : false
     }
   },
   methods: {
@@ -34,8 +39,8 @@ export default {
         .then(() => {
           this.$router.replace('/home')
         })
-        .then(err => {
-          this.error = err
+        .catch(err =>{
+          this.error=err.message
         })
     }
   }

@@ -58,7 +58,6 @@ export default class Cognito {
       })
     })
   }
-
   /**
    * 確認コードからユーザーを有効化する
    */
@@ -105,7 +104,41 @@ export default class Cognito {
   logout () {
     this.userPool.getCurrentUser().signOut()
   }
-
+    /**
+   * パスワードをリセット
+   */
+  resetPassword (username) {
+    const userData = { Username: username, Pool: this.userPool }
+    const cognitoUser = new CognitoUser(userData)
+    return new Promise((resolve, reject) => {
+      cognitoUser.forgotPassword( {
+        onSuccess: (result) => {
+          resolve(result)
+        },
+        onFailure: (err) => {
+          reject(err)
+        }
+      })
+    })
+  }
+  /**
+   * 確認コードからユーザーを有効化する
+  */
+  confirmPassword (username, confirmationCode, newPassword) {
+    const userData = { Username: username, Pool: this.userPool }
+    const cognitoUser = new CognitoUser(userData)
+    return new Promise((resolve, reject) => {
+      cognitoUser.confirmPassword(confirmationCode, newPassword, (err, result) => {
+        if (err) {
+          reject(err)
+          console.log("confirmation:"+ err)
+        } else {
+          resolve(result)
+          console.log("confirmation:"+ result)
+        }
+      })
+    })
+  }
   /**
    * ログインしているかの判定
    */

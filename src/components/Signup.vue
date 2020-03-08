@@ -2,6 +2,9 @@
 <template>
   <div class="signup">
     <h2>ユーザー登録</h2>
+        <div v-if="error" class="error">
+      {{ error}}
+    </div>
     <form @submit.prevent="singup">
       <div>
         メール:
@@ -29,7 +32,8 @@ export default {
     return {
       username: '',
       password: '',
-      passwordConfirm: ''
+      passwordConfirm: '',
+      error : false
     }
   },
   methods: {
@@ -42,6 +46,7 @@ export default {
           })
           .catch(err => {
             console.log(err)
+            this.error =err.message
           })
       }
     }
