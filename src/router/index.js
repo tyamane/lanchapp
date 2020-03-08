@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue' // added
 import VueRouter from 'vue-router'
@@ -13,11 +14,37 @@ import test1 from '@/components/test1'
 import test2 from '@/components/test2'
 import test3 from '@/components/test3'
 
+import HelloWorld from '@/components/HelloWorld'
+import cognito from '@/cognito'
+import Login from '@/components/Login'
+import Signup from '@/components/Signup'
+import Confirm from '@/components/Confirm'
+import MainPage from '@/components/MainPage'
+import Order from '@/components/Order'
+import Profile from '@/components/Profile'
+
+const requireAuth = (to, from, next) => {
+  cognito.isAuthenticated()
+    .then(session => {
+      next()
+    })
+    .catch(session => {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    })
+}
+const logout = (to, from, next) => {
+  cognito.logout()
+  next('/login')
+}
+
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: HelloWorld
   },
   {
     path: '/about',
@@ -41,6 +68,36 @@ const routes = [
     path: '/test3',
     name: 'test3',
     component: test3
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: Order,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/singup',
+    name: 'Signup',
+    component: Signup
+  },
+  {
+    path: '/confirm',
+    name: 'Confirm',
+    component: Confirm
+  },
+  { path: '/logout',
+    beforeEnter: logout
   }
 ]
 
