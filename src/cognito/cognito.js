@@ -102,7 +102,10 @@ export default class Cognito {
    * ログアウト
    */
   logout () {
-    this.userPool.getCurrentUser().signOut()
+    if (!this.userPool.getCurrentUser()){
+      console.log( 'logout:'+this.userPool.getCurrentUser() )
+      this.userPool.getCurrentUser().signOut()
+    }
   }
     /**
    * パスワードをリセット
@@ -122,7 +125,7 @@ export default class Cognito {
     })
   }
   /**
-   * 確認コードからユーザーを有効化する
+   * 確認コードによってパスワードを再設定する
   */
   confirmPassword (username, confirmationCode, newPassword) {
     const userData = { Username: username, Pool: this.userPool }

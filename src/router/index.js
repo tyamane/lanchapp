@@ -22,6 +22,8 @@ import Confirm from '@/components/Confirm'
 import MainPage from '@/components/MainPage'
 import Order from '@/components/Order'
 import Profile from '@/components/Profile'
+import Reset from '@/components/Reset'
+import ConfirmPassword from '@/components/ConfirmPassword'
 
 const requireAuth = (to, from, next) => {
   cognito.isAuthenticated()
@@ -39,11 +41,6 @@ const logout = (to, from, next) => {
   cognito.logout()
   next('/login')
 }
-const logout = (to, from, next) => {
-  alert("パスワードをリセットする確認コードを登録メールアドレスに送信します。")
-  cognito.logout()
-  next('/login')
-}
 
 const routes = [
   {
@@ -58,21 +55,6 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/test1',
-    name: 'test1',
-    component: test1
-  },
-  {
-    path: '/test2',
-    name: 'test2',
-    component: test2
-  },
-  {
-    path: '/test3',
-    name: 'test3',
-    component: test3
   },
   {
     path: '/order',
@@ -104,10 +86,16 @@ const routes = [
   { path: '/logout',
     beforeEnter: logout
   },
-  {
-    path: '/confirm_password',
-    beforeEnter: reset
+  { 
+    path: '/reset',
+    name: 'Reset',
+    component: Reset
   },
+  { 
+    path: '/confirmPassword',
+    name: 'ConfirmPassword',
+    component: ConfirmPassword
+  }
 ]
 
 const router = new VueRouter({

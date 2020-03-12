@@ -1,11 +1,17 @@
 /* eslint-disable no-unused-vars */
 <template>
   <div class="confirm">
-    <h2>確認コード入力</h2>
+    <h2>パスワード再設定</h2>
+    <div>{{$route.params.username}}</div>
+    <div v-if="error" class="error"></div>
     <form @submit.prevent="confirm">
       <div>
         メール:
         <input type="text" placeholder="メール" v-model="username" required>
+      </div>
+      <div>
+        パスワード:
+        <input type="password" placeholder="new password" v-model="newPassword" required>
       </div>
       <div>
         確認コード:
@@ -13,8 +19,6 @@
       </div>
       <button>確認</button>
     </form>
-    <router-link to="/login">ログイン</router-link>
-    <router-link to="/singup">ユーザー登録</router-link>
   </div>
 </template>
 
@@ -24,12 +28,14 @@ export default {
   data () {
     return {
       username: '',
-      confirmationCode: ''
+      confirmationCode: '',
+      newPassword: null,
+      error: false
     }
   },
   methods: {
     confirm () {
-      this.$cognito.confirmation(this.username, this.confirmationCode)
+      this.$cognito.confirmPassword(this.username, this.confirmationCode, this.newPassword)
         .then(() => {
           this.$router.replace('/login')
         })

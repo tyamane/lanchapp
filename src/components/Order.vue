@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Order',
+  name: 'My Order',
   props: {
     msg: String
   }

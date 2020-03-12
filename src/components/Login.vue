@@ -17,9 +17,9 @@
       <button>ログイン</button>
     </form>
     <br>
-    <router-link to="/singup">ユーザー登録</router-link>
+    <router-link to="/signup">ユーザー登録</router-link>
     <br>
-    <router-link to="/reset_password">パスワードリセット</router-link>
+    <router-link to="/reset">パスワードリセット</router-link>
   </div>
 </template>
 
