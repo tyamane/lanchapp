@@ -37,7 +37,9 @@ export default {
     login () {
       this.$cognito.login(this.username, this.password)
         .then(() => {
-          this.$router.replace('/home')
+          // クエリパラメータにredirectがあればその値、そうでなければ'/'に遷移する
+          // Loginコンポーネント
+          this.$router.replace(this.$route.query.redirect || '/')
         })
         .catch(err =>{
           this.error=err.message

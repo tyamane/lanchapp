@@ -88,7 +88,12 @@ export default class Cognito {
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (result) => {
-          // 実際にはクレデンシャルなどをここで取得する(今回は省略)
+          console.log("result: ", result);
+          console.log("gCognitoUser: ", cognitoUser);
+          const accessToken = result.getAccessToken().getJwtToken();
+          console.log("Login succeeded!\n");
+          console.log("\naccessToken: " + accessToken);
+
           resolve(result)
         },
         onFailure: (err) => {
@@ -102,9 +107,12 @@ export default class Cognito {
    * ログアウト
    */
   logout () {
-    if (!this.userPool.getCurrentUser()){
+    if (this.userPool.getCurrentUser()){
       console.log( 'logout:'+this.userPool.getCurrentUser() )
       this.userPool.getCurrentUser().signOut()
+    }
+    else{
+      console.log("logout: nobody logged in.")
     }
   }
     /**
@@ -156,6 +164,7 @@ export default class Cognito {
           if (!session.isValid()) {
             reject(session)
           } else {
+            console.log("isAuthenticated: user logged in.")
             resolve(session)
           }
         }
