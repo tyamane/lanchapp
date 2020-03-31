@@ -8,6 +8,7 @@ import { Config, CognitoIdentityCredentials } from 'aws-sdk'
 
 export default class Cognito {
   configure (config) {
+    console.log("cognito configure")
     if (config.userPool) {
       this.userPool = config.userPool
     } else {
@@ -22,6 +23,9 @@ export default class Cognito {
     })
     this.options = config
   }
+  created = function () {
+    console.log("cognito created")
+  }
 
   static install = (Vue, options) => {
     Object.defineProperty(Vue.prototype, '$cognito', {
@@ -30,14 +34,15 @@ export default class Cognito {
 
     Vue.mixin({
       beforeCreate () {
+        console.log("cognito mixin beforeCreate")
         if (this.$options.cognito) {
           this._cognito = this.$options.cognito
           this._cognito.configure(options)
         }
       }
     })
-  }
 
+  }
   /**
    * username, passwordでサインアップ
    * username = emailとしてUserAttributeにも登録
@@ -93,10 +98,11 @@ export default class Cognito {
           const accessToken = result.getAccessToken().getJwtToken();
           console.log("Login succeeded!\n");
           console.log("\naccessToken: " + accessToken);
-
+          this.bAuthenticated = true;
           resolve(result)
         },
         onFailure: (err) => {
+          this.bAuthenticated_ = false;
           reject(err)
         }
       })
@@ -110,6 +116,7 @@ export default class Cognito {
     if (this.userPool.getCurrentUser()){
       console.log( 'logout:'+this.userPool.getCurrentUser() )
       this.userPool.getCurrentUser().signOut()
+      this.bAuthenticated_ = false;
     }
     else{
       console.log("logout: nobody logged in.")

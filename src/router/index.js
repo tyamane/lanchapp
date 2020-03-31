@@ -38,8 +38,12 @@ const requireAuth = (to, from, next) => {
     })
 }
 const logout = (to, from, next) => {
-  cognito.logout()
-  next('/login')
+  var result = confirm("ダログアウトしますか？");
+  if ( result ){
+    cognito.logout()
+    next('/login')
+  }
+
 }
 
 const routes = [
