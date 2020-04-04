@@ -24,6 +24,7 @@ import Order from '@/components/Order'
 import Profile from '@/components/Profile'
 import Reset from '@/components/Reset'
 import ConfirmPassword from '@/components/ConfirmPassword'
+import store from '@/store'
 
 const requireAuth = (to, from, next) => {
   cognito.isAuthenticated()

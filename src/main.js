@@ -10,5 +10,16 @@ new Vue({
   router,
   store,
   cognito,
-  render: h => h(App)
+  render: h => h(App),
+  created : function()
+  {
+    console.log(store.state.AuthData)
+    cognito.isAuthenticated()
+        .then(session => {
+          store.commit('set_auth_data',{session: session})
+        })
+        .catch( () => {
+          store.commit('set_auth_data',{session: null})
+        })
+  }
 }).$mount('#app')

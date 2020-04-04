@@ -5,6 +5,7 @@ import {
   CognitoUserAttribute
 } from 'amazon-cognito-identity-js'
 import { Config, CognitoIdentityCredentials } from 'aws-sdk'
+import store from '@/store'
 
 export default class Cognito {
   configure (config) {
@@ -93,6 +94,8 @@ export default class Cognito {
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (result) => {
+          store.commit('set_auth_data',{session: result})
+
           console.log("result: ", result);
           console.log("gCognitoUser: ", cognitoUser);
           const accessToken = result.getAccessToken().getJwtToken();
@@ -114,9 +117,9 @@ export default class Cognito {
    */
   logout () {
     if (this.userPool.getCurrentUser()){
+      store.commit('set_auth_data',{ session: null})
       console.log( 'logout:'+this.userPool.getCurrentUser() )
       this.userPool.getCurrentUser().signOut()
-      this.bAuthenticated_ = false;
     }
     else{
       console.log("logout: nobody logged in.")
