@@ -2,6 +2,9 @@
 <template>
   <div class="confirm">
     <h2>確認コード入力</h2>
+    <div v-if="error" class="error">
+      {{ error}}
+    </div>
     <form @submit.prevent="confirm">
       <div>
         メール:
@@ -13,8 +16,6 @@
       </div>
       <button>確認</button>
     </form>
-    <router-link to="/login">ログイン</router-link>
-    <router-link to="/singup">ユーザー登録</router-link>
   </div>
 </template>
 
@@ -24,7 +25,8 @@ export default {
   data () {
     return {
       username: '',
-      confirmationCode: ''
+      confirmationCode: '',
+      error : false
     }
   },
   methods: {

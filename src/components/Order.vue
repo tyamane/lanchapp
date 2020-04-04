@@ -4,7 +4,7 @@
     <div v-if="error" class="error">
       {{ error}}
     </div>
-    <h1>{{ msg }}</h1>
+    <div>ログイン済み</div>
   </div>
 </template>
 

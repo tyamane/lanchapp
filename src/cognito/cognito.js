@@ -149,14 +149,15 @@ export default class Cognito {
     const userData = { Username: username, Pool: this.userPool }
     const cognitoUser = new CognitoUser(userData)
     return new Promise((resolve, reject) => {
-      cognitoUser.confirmPassword(confirmationCode, newPassword, (err, result) => {
-        if (err) {
-          reject(err)
-          console.log("confirmation:"+ err)
-        } else {
-          resolve(result)
-          console.log("confirmation:"+ result)
-        }
+      cognitoUser.confirmPassword(confirmationCode, newPassword, {
+          onSuccess() {
+            console.log('Password confirmed!');
+            resolve()
+          },
+          onFailure(err) {
+            console.log('Password not confirmed!');
+            reject(err)
+          }
       })
     })
   }

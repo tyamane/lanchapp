@@ -2,7 +2,7 @@
 <template>
   <div class="signup">
     <h2>ユーザー登録</h2>
-        <div v-if="error" class="error">
+    <div v-if="error" class="error">
       {{ error}}
     </div>
     <form @submit.prevent="singup">
@@ -21,7 +21,6 @@
       <button>登録</button>
     </form>
     <router-link to="/login">ログイン</router-link>
-    <router-link to="/confirm">確認コード入力</router-link>
   </div>
 </template>
 

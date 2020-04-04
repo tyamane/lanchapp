@@ -2,6 +2,9 @@
 <template>
   <div class="login">
     <h2>ログイン</h2>
+    <div v-if="$route.query.redirect" class="error">
+      ログインが必要です。ログイン完了後元のページに移動します。
+    </div>   
     <div v-if="error" class="error">
       {{ error}}
     </div>

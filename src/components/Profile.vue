@@ -1,9 +1,8 @@
 <template>
   <div class="profile">
     <h2>Profile</h2>
+    <div>ログイン済み</div>
 
-    <router-link to="/login">ログイン</router-link>
-    <router-link to="/singup">ユーザー登録</router-link>
   </div>
 </template>
 
