@@ -25,7 +25,7 @@ export default class Cognito {
     this.options = config
   }
   created = function () {
-    console.log("cognito created")
+    //console.log("cognito created")
   }
 
   static install = (Vue, options) => {
@@ -98,7 +98,7 @@ export default class Cognito {
 
           //console.log("result: ", result);
           //console.log("gCognitoUser: ", cognitoUser);
-          const accessToken = result.getAccessToken().getJwtToken();
+          //const accessToken = result.getAccessToken().getJwtToken();
           //console.log("Login succeeded!\n");
           //console.log("\naccessToken: " + accessToken);
           this.bAuthenticated = true;
@@ -122,7 +122,7 @@ export default class Cognito {
       this.userPool.getCurrentUser().signOut()
     }
     else{
-      console.log("logout: nobody logged in.")
+      //console.log("logout: nobody logged in.")
     }
   }
     /**
@@ -151,11 +151,11 @@ export default class Cognito {
     return new Promise((resolve, reject) => {
       cognitoUser.confirmPassword(confirmationCode, newPassword, {
           onSuccess() {
-            console.log('Password confirmed!');
+            //console.log('Password confirmed!');
             resolve()
           },
           onFailure(err) {
-            console.log('Password not confirmed!');
+            //console.log('Password not confirmed!');
             reject(err)
           }
       })
