@@ -44,7 +44,7 @@ export default {
             this.$router.replace('/confirm')
           })
           .catch(err => {
-            console.log(err)
+            //console.log(err)
             this.error =err.message
           })
       }
