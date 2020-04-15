@@ -9,7 +9,7 @@ import store from '@/store'
 
 export default class Cognito {
   configure (config) {
-    console.log("cognito configure")
+    //console.log("cognito configure")
     if (config.userPool) {
       this.userPool = config.userPool
     } else {
@@ -35,7 +35,7 @@ export default class Cognito {
 
     Vue.mixin({
       beforeCreate () {
-        console.log("cognito mixin beforeCreate")
+        //console.log("cognito mixin beforeCreate")
         if (this.$options.cognito) {
           this._cognito = this.$options.cognito
           this._cognito.configure(options)
@@ -56,10 +56,10 @@ export default class Cognito {
       this.userPool.signUp(username, password, attributeList, null, (err, result) => {
         if (err) {
           reject(err)
-          console.log("signup reject:" + err.toString())
+          //console.log("signup reject:" + err.toString())
         } else {
           resolve(result)
-          console.log("signup:" + result.toString())
+          //console.log("signup:" + result.toString())
         }
       })
     })
@@ -74,10 +74,10 @@ export default class Cognito {
       cognitoUser.confirmRegistration(confirmationCode, true, (err, result) => {
         if (err) {
           reject(err)
-          console.log("confirmation:"+ err)
+          //console.log("confirmation:"+ err)
         } else {
           resolve(result)
-          console.log("confirmation:"+ result)
+          //console.log("confirmation:"+ result)
         }
       })
     })
@@ -96,11 +96,11 @@ export default class Cognito {
         onSuccess: (result) => {
           store.commit('set_auth_data',{session: result})
 
-          console.log("result: ", result);
-          console.log("gCognitoUser: ", cognitoUser);
+          //console.log("result: ", result);
+          //console.log("gCognitoUser: ", cognitoUser);
           const accessToken = result.getAccessToken().getJwtToken();
-          console.log("Login succeeded!\n");
-          console.log("\naccessToken: " + accessToken);
+          //console.log("Login succeeded!\n");
+          //console.log("\naccessToken: " + accessToken);
           this.bAuthenticated = true;
           resolve(result)
         },
@@ -118,7 +118,7 @@ export default class Cognito {
   logout () {
     if (this.userPool.getCurrentUser()){
       store.commit('set_auth_data',{ session: null})
-      console.log( 'logout:'+this.userPool.getCurrentUser() )
+      //console.log( 'logout:'+this.userPool.getCurrentUser() )
       this.userPool.getCurrentUser().signOut()
     }
     else{
@@ -175,7 +175,7 @@ export default class Cognito {
           if (!session.isValid()) {
             reject(session)
           } else {
-            console.log("isAuthenticated: user logged in.")
+            //console.log("isAuthenticated: user logged in.")
             resolve(session)
           }
         }
